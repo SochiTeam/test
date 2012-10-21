@@ -12,20 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include build/defs.mk
+default: all
 
-CC := g++
-SRC := $(wildcard src/*.cpp)
-OBJ := $(subst src/,obj/,$(SRC:.cpp=.o))
-OUT := out
-CFLAGS := -c -Wall
-LDFLAGS :=
+include ../core/build/defs.mk
+include ../core/build/clear.mk
 
-all: core
+TARGET_NAME := test
+TARGET_SRC := src/main.cpp
+TARGET_TYPE := binary
+TARGET_BUILD := true
 
-core: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) -o $(OUT)/test
-	
-obj/%.o: src/%.cpp
-	$(CC) $(CFLAGS) $< -o $@
+include ../core/build/target.mk
 
+# Targets
+all: $(ALL_TARGETS)
+clean: $(addprefix clean-,$(ALL_TARGETS))
